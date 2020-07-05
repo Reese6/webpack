@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssPlugin = require('mini-css-extract-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,13 +12,16 @@ module.exports = {
     path: path.resolve(__dirname, 'bundle'),
     publicPath: '/bundle',
   },
-  devServer: {
-    hot: true,
-  },
   plugins: [
     new MiniCssPlugin({
       filename: '[name].css',
     }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     { from: 'src/assets', to: 'assets' }
+    //   ],
+    // }),
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
   ],
   module: {
     rules: [
@@ -28,9 +33,11 @@ module.exports = {
           'css-loader',
           {
             loader: 'postcss-loader',
-            options: { config: { path: './postcss.config.js' } },
+            options: { config: { path: './postcss.config.js', }, },
           },
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+          },
         ],
       },
     ],
