@@ -12,6 +12,11 @@ module.exports = {
     path: path.resolve(__dirname, 'bundle'),
     publicPath: '/bundle',
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   plugins: [
     new MiniCssPlugin({
       filename: '[name].css',
